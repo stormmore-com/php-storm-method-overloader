@@ -1,0 +1,17 @@
+{
+    "name": "stormmore/method-overloader",
+    "autoload": {
+        "psr-4": {
+            "Storm\\MethodOverload\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Michał Czerski",
+            "email": "czerski.michal@gmail.com"
+        }
+    ],
+    "require-dev": {
+        "phpunit/phpunit": "*"
+    }
+}
