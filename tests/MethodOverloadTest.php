@@ -26,7 +26,7 @@ final class MethodOverloadTest extends TestCase
     {
         $result = MethodOverloader::create()
             ->onFailure(function () { return 0; })
-            ->invoke('none', 'int');
+            ->invoke(['none', 'int']);
 
         $this->assertEquals(0, $result);
     }
@@ -34,67 +34,67 @@ final class MethodOverloadTest extends TestCase
     public function test4ArgsNotFoundCallableMethodOverload(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->methodOverload->invoke(null, null, null, null);
+        $this->methodOverload->invoke([null, null, null, null]);
     }
 
     public function testStringIntStringNotFoundCallableMethodOverload(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->methodOverload->invoke('arg1', 5, "arg2");
+        $this->methodOverload->invoke(['arg1', 5, "arg2"]);
     }
 
     public function testStringMethodOverload(): void
     {
-        $result = $this->methodOverload->invoke('arg1');
+        $result = $this->methodOverload->invoke(['arg1']);
 
         $this->assertEquals('_string_fun_arg1', $result);
     }
 
     public function testIntMethodOverload(): void
     {
-        $result = $this->methodOverload->invoke(5);
+        $result = $this->methodOverload->invoke([5]);
 
         $this->assertEquals('_int_fun_5', $result);
     }
 
     public function testFloatMethodOverload(): void
     {
-        $result = $this->methodOverload->invoke(5.5);
+        $result = $this->methodOverload->invoke([5.5]);
 
         $this->assertEquals('_float_fun_5.5', $result);
     }
 
     public function testNumericStringMethodOverload(): void
     {
-        $result = $this->methodOverload->invoke(5.7, "string");
+        $result = $this->methodOverload->invoke([5.7, "string"]);
 
         $this->assertEquals('_numeric_string_fun_5.7_string', $result);
     }
 
     public function testBoolTrueMethodOverload(): void
     {
-        $result = $this->methodOverload->invoke(true);
+        $result = $this->methodOverload->invoke([true]);
 
         $this->assertEquals('_bool_fun_true', $result);
     }
 
     public function testBoolFalseMethodOverload(): void
     {
-        $result = $this->methodOverload->invoke(false);
+        $result = $this->methodOverload->invoke([false]);
 
         $this->assertEquals('_bool_fun_false', $result);
     }
 
     public function testArrayMethodOverload(): void
     {
-        $result = $this->methodOverload->invoke([4, 7]);
+        $result = $this->methodOverload->invoke([[4, 7]]);
 
         $this->assertEquals('_arr_fun_4,7', $result);
     }
 
     public function testObjectMethodOverload(): void
     {
-        $result = $this->methodOverload->invoke(new stdClass());
+        $result = $this->methodOverload->invoke([new stdClass()]);
 
         $this->assertEquals('_obj_fun_stdClass', $result);
     }
@@ -104,7 +104,7 @@ final class MethodOverloadTest extends TestCase
         $callable = function () {
             return "inline_fun";
         };
-        $result = $this->methodOverload->invoke($callable);
+        $result = $this->methodOverload->invoke([$callable]);
 
         $this->assertEquals('_callable_inline_fun', $result);
     }
@@ -112,77 +112,77 @@ final class MethodOverloadTest extends TestCase
     public function testResourceMethodOverload(): void
     {
         $resource = fopen("README.md", "r");
-        $result = $this->methodOverload->invoke($resource);
+        $result = $this->methodOverload->invoke([$resource]);
 
         $this->assertEquals('_resource', $result);
     }
 
     public function test2ArgsStringOverload(): void
     {
-        $result = $this->methodOverload->invoke("string1", "string2");
+        $result = $this->methodOverload->invoke(["string1", "string2"]);
 
         $this->assertEquals('_string_string_string1_string2', $result);
     }
 
     public function test3ArgsStringOverload(): void
     {
-        $result = $this->methodOverload->invoke("string1", "string2", "string3");
+        $result = $this->methodOverload->invoke(["string1", "string2", "string3"]);
 
         $this->assertEquals('_string_string_string_string1_string2_string3', $result);
     }
 
     public function test2ArgsIntOverload(): void
     {
-        $result = $this->methodOverload->invoke(5, 7);
+        $result = $this->methodOverload->invoke([5, 7]);
 
         $this->assertEquals('_int_int_5_7', $result);
     }
 
     public function test2ArgsFloatOverload(): void
     {
-        $result = $this->methodOverload->invoke(5.5, 4.4);
+        $result = $this->methodOverload->invoke([5.5, 4.4]);
 
         $this->assertEquals('_float_float_5.5_4.4', $result);
     }
 
     public function test3ArgsIntOverload(): void
     {
-        $result = $this->methodOverload->invoke(1, 2, 3);
+        $result = $this->methodOverload->invoke([1, 2, 3]);
 
         $this->assertEquals('_int_int_int_1_2_3', $result);
     }
 
     public function testUserClassArgMethodOverload(): void
     {
-        $result = $this->methodOverload->invoke(new UserClass());
+        $result = $this->methodOverload->invoke([new UserClass()]);
 
         $this->assertEquals('UserClass', $result);
     }
 
     public function test2ArgsUserClassMethodOverload(): void
     {
-        $result = $this->methodOverload->invoke(new UserClass(), new UserClass2());
+        $result = $this->methodOverload->invoke([new UserClass(), new UserClass2()]);
 
         $this->assertEquals('UserClass_UserClass2', $result);
     }
 
     public function testNullOverload(): void
     {
-        $result = $this->methodOverload->invoke(null);
+        $result = $this->methodOverload->invoke([null]);
 
         $this->assertEquals("_string_fun_", $result);
     }
 
     public function test2NullOverload(): void
     {
-        $result = $this->methodOverload->invoke(null, null);
+        $result = $this->methodOverload->invoke([null, null]);
 
         $this->assertEquals("_numeric_string_fun__", $result);
     }
 
     public function test3NullOverload(): void
     {
-        $result = $this->methodOverload->invoke(null, null, null);
+        $result = $this->methodOverload->invoke([null, null, null]);
 
         $this->assertEquals("_string_string_string___", $result);
     }
@@ -192,7 +192,7 @@ final class MethodOverloadTest extends TestCase
     {
         $this->methodOverload = (new MethodOverloader())
             ->register($this->hello(...), 'string');
-        $hello = $this->methodOverload->invoke('John');
+        $hello = $this->methodOverload->invoke(['John']);
 
         $this->assertEquals('Hello John', $hello);
     }
@@ -201,7 +201,7 @@ final class MethodOverloadTest extends TestCase
     {
         $this->methodOverload = (new MethodOverloader())
             ->register(self::staticHello(...), 'string');
-        $hello = $this->methodOverload->invoke('John');
+        $hello = $this->methodOverload->invoke(['John']);
 
         $this->assertEquals('Hello John', $hello);
     }

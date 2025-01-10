@@ -57,7 +57,7 @@ class MethodOverloader
         throw new InvalidArgumentException();
     }
 
-    public function invoke(mixed ...$invokeArgs): mixed
+    public function invoke(array $invokeArgs): mixed
     {
         $callable = $this->find($invokeArgs);
         if (is_string($callable)) {
