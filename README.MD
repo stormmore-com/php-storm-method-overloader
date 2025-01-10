@@ -8,7 +8,7 @@ $userRepository = new UserRepository();
 $userRepository->add('Micheal', 'Jordan', 23);
 $userRepository->add('Micheal Jordan', 23);
 $userRepository->add(new User("Micheal", "Jordan", 23));
-$userRepository->add(new UserDto("Micheal", "Jordan", 23));
+$userRepository->add(new Player("Micheal", "Jordan", 23));
 $userRepository->add(['fist_name' => 'Micheal', 'last_name' => 'Jordan', 'number' => 23]);
 ```
 
@@ -33,7 +33,7 @@ class UserRepository
             $addMethodOverloader = MethodOverloader::create($this)
             ->register($this->addByFirstNameLastNameAndNumber(...),'string', 'string', 'int')
             ->register($this->adddByUser(...), User::Class)
-            ->register($this->addByUserDto(...), UserDto::class)
+            ->register($this->addByPlayer(...), Player::class)
             ->register($this->addByArray(...), 'array')
             ->register($this->addNyNameAndNumber(...), 'string', 'int')
             ->onFailure(function() {
@@ -55,7 +55,7 @@ class UserRepository
     {
     }
     
-    private function addByUserDto(UserDto $userDto): void
+    private function addByPlayer(Player $player): void
     {
     }
     
