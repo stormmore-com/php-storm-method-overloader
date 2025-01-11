@@ -5,11 +5,11 @@ of arguments like in other languages.
 
 ```php
 $userRepository = new UserRepository();
-$userRepository->add('Micheal', 'Jordan', 23);
-$userRepository->add('Micheal Jordan', 23);
-$userRepository->add(new User("Micheal", "Jordan", 23));
-$userRepository->add(new Player("Micheal", "Jordan", 23));
-$userRepository->add(['fist_name' => 'Micheal', 'last_name' => 'Jordan', 'number' => 23]);
+$userRepository->add('Michael','Jordan', 23);
+$userRepository->add('Michael Jordan', 23);
+$userRepository->add(new User("Michael", "Jordan", 23));
+$userRepository->add(new Player("Michael", "Jordan", 23));
+$userRepository->add(['fist_name' => 'Michael', 'last_name' => 'Jordan', 'number' => 23]);
 ```
 
 ### Installation
