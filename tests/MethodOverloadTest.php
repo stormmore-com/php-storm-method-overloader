@@ -16,6 +16,7 @@ final class MethodOverloadTest extends TestCase
 {
     private MethodOverloader $methodOverload;
 
+
     public function testWhenUserClassNotFound(): void
     {
         $this->expectException(InvalidArgumentException::class);
@@ -52,7 +53,7 @@ final class MethodOverloadTest extends TestCase
 
     public function testIntMethodOverload(): void
     {
-        $result = $this->methodOverload->invoke([5]);
+        $result = $this->methodOverload->invoke(["number" => 5]);
 
         $this->assertEquals('_int_fun_5', $result);
     }
@@ -222,8 +223,8 @@ final class MethodOverloadTest extends TestCase
             ->register(function ($string) {
                 return "_string_fun_" . $string;
             }, 'string')
-            ->register(function ($int) {
-                return "_int_fun_" . $int;
+            ->register(function ($number) {
+                return "_int_fun_" . $number;
             }, 'int')
             ->register(function ($float) {
                 return "_float_fun_" . $float;

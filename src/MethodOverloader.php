@@ -85,12 +85,15 @@ class MethodOverloader
 
     private function fulfillInvokeDefinition($invokeArgs, $callableTypes, $strictTypes = false): bool
     {
+
         if (count($invokeArgs) === count($callableTypes)) {
-            foreach($invokeArgs as $i => $arg) {
+            $i = 0;
+            foreach($invokeArgs as $key => $arg) {
                 $type = $callableTypes[$i];
                 if (!$this->is_type($type, $arg, $strictTypes)) {
                     return false;
                 }
+                $i++;
             }
             return true;
         }
